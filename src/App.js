@@ -4,6 +4,7 @@ import Auth from './components/Auth/Auth';
 import SignIn from './components/SignIn/SignIn';
 import './App.css';
 import DecksPage from './components/DecksPage/DecksPage';
+import CreateDeck from './components/CreateDeck/CreateDeck';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Route path="/auth" element={<Auth />} />       {/* Регистрация */}
         <Route path="/signin" element={<SignIn />} />   {/* Авторизация */}
         <Route path="/decks" element={<DecksPage />} />
+        <Route path="/create-deck" element={<CreateDeck />} />
       </Routes>
     </Router>
   );
