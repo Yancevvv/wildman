@@ -35,6 +35,7 @@ const DecksPage = () => {
     if (selectedDeck) {
       console.log(`Opening chat for deck ${selectedDeck}`);
       // Здесь будет логика открытия чата
+      navigate('/chat');
     }
   };
 

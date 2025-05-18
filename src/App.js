@@ -6,6 +6,7 @@ import './App.css';
 import DecksPage from './components/DecksPage/DecksPage';
 import CreateDeck from './components/CreateDeck/CreateDeck';
 import FlipCards from './components/FlipCards/FlipCards';
+import ChatPage from './components/ChatPage/ChatPage';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/decks" element={<DecksPage />} />
         <Route path="/create-deck" element={<CreateDeck />} />
         <Route path="/flip-cards/:deckId" element={<FlipCards />} />
+        <Route path="/chat" element={<ChatPage />} />
       </Routes>
     </Router>
   );
