@@ -5,6 +5,7 @@ import SignIn from './components/SignIn/SignIn';
 import './App.css';
 import DecksPage from './components/DecksPage/DecksPage';
 import CreateDeck from './components/CreateDeck/CreateDeck';
+import FlipCards from './components/FlipCards/FlipCards';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/signin" element={<SignIn />} />   {/* Авторизация */}
         <Route path="/decks" element={<DecksPage />} />
         <Route path="/create-deck" element={<CreateDeck />} />
+        <Route path="/flip-cards/:deckId" element={<FlipCards />} />
       </Routes>
     </Router>
   );

@@ -56,6 +56,12 @@ const DecksPage = () => {
   const handleCancelEdit = () => {
     setIsEditing(false);
   };
+  
+  const handleLearnCard = () => {
+  if (selectedDeck) {
+    navigate(`/flip-cards/${selectedDeck}`);
+  }
+};
 
   return (
     <div className="decks-page">
@@ -129,6 +135,13 @@ const DecksPage = () => {
             >
               Chat
             </button>
+            <button 
+              onClick={handleLearnCard} 
+              className="action-btn learn-btn"
+              disabled={!selectedDeck}
+            >
+              Learn Card
+            </button>  
           </>
         )}
       </div>
