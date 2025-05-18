@@ -1,3 +1,4 @@
+import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './components/Home/Home';
 import Auth from './components/Auth/Auth';
@@ -7,6 +8,7 @@ import DecksPage from './components/DecksPage/DecksPage';
 import CreateDeck from './components/CreateDeck/CreateDeck';
 import FlipCards from './components/FlipCards/FlipCards';
 import ChatPage from './components/ChatPage/ChatPage';
+import Rating from './components/Rating/Rating';
 
 function App() {
   return (
@@ -19,6 +21,7 @@ function App() {
         <Route path="/create-deck" element={<CreateDeck />} />
         <Route path="/flip-cards/:deckId" element={<FlipCards />} />
         <Route path="/chat" element={<ChatPage />} />
+        <Route path="/rating" element={<Rating />} />
       </Routes>
     </Router>
   );

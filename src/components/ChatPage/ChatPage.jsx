@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // Импортируем useNavigate
 import './ChatPage.css';
 
 const ChatPage = () => {
+  const navigate = useNavigate(); // Для навигации
   const [message, setMessage] = useState('');
   const [conversation, setConversation] = useState([
     { 
@@ -86,6 +88,16 @@ const ChatPage = () => {
             className="send-button"
           >
             Send
+          </button>
+        </div>
+
+        {/* Кнопка перехода на страницу Rating */}
+        <div className="rate-chat-container">
+          <button 
+            className="rate-chat-button" 
+            onClick={() => navigate('/rating')}
+          >
+            Rate this chat
           </button>
         </div>
       </div>

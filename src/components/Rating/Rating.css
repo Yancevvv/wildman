@@ -1,0 +1,57 @@
+.rating-container {
+  text-align: center;
+  margin: 50px auto;
+  max-width: 600px;
+}
+
+.rating-title {
+  font-size: 28px;
+  margin-bottom: 20px;
+}
+
+.rating-stars {
+  margin-bottom: 30px;
+}
+
+.star-button {
+  font-size: 36px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #ccc;
+}
+
+.star-button.active {
+  color: gold;
+}
+
+.rating-questions {
+  text-align: left;
+  margin: 20px auto;
+  padding: 0 20px;
+}
+
+.rating-questions label {
+  display: block;
+  margin: 10px 0;
+  font-size: 16px;
+}
+
+.submit-button-container {
+  text-align: right;
+  margin-top: 30px;
+}
+
+.submit-button {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.submit-button:hover {
+  background-color: #45a049;
+}
