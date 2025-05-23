@@ -9,6 +9,7 @@ import CreateDeck from './components/CreateDeck/CreateDeck';
 import FlipCards from './components/FlipCards/FlipCards';
 import ChatPage from './components/ChatPage/ChatPage';
 import Rating from './components/Rating/Rating';
+import HomePage from './components/HomePage/HomePage';
 
 function App() {
   return (

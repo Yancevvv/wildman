@@ -1,86 +1,52 @@
-.home-container {
+.home-container, .home-page {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh;
-  gap: 2rem;
-  padding: 20px;
+  min-height: 100vh;
+  padding: 2rem;
+  background-color: #f8f9fa;
   text-align: center;
 }
 
-.home-container h1 {
-  font-size: 2rem;
+/* Заголовок */
+.home-container h1, .home-page h1 {
+  font-size: 2.5rem;
   color: #2c3e50;
-  max-width: 800px;
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
+  font-weight: 600;
 }
 
-.action-buttons {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-  width: 100%;
-  max-width: 400px;
-}
-
-.auth-buttons {
+/* Контейнер для кнопок */
+.home-container .buttons, .home-page .buttons {
   display: flex;
   gap: 1.5rem;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
-.auth-button {
-  padding: 12px 24px;
+/* Стили кнопок */
+.home-container button, .home-page button {
+  padding: 0.8rem 1.8rem;
   border: none;
   border-radius: 6px;
   font-size: 1rem;
-  cursor: pointer;
-  transition: all 0.3s;
-  min-width: 160px;
   font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 200px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
-.signin-btn {
-  background-color: #4285f4;
+/* Кнопка входа */
+.home-container button:nth-child(1) {
+  background-color: #3498db;
   color: white;
 }
 
-.signup-btn {
-  background-color: #f1f1f1;
-  color: #333;
-}
-
-.decks-btn {
-  background-color: #34a853;
+/* Кнопка регистрации */
+.home-container button:nth-child(2) {
+  background-color: #2ecc71;
   color: white;
-  width: 100%;
-}
-
-.auth-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-}
-
-.signin-btn:hover {
-  background-color: #3367d6;
-}
-
-.signup-btn:hover {
-  background-color: #e0e0e0;
-}
-
-.decks-btn:hover {
-  background-color: #2d9248;
-}
-
-/* Адаптивность */
-@media (max-width: 600px) {
-  .auth-buttons {
-    flex-direction: column;
-    gap: 1rem;
-  }
-  
-  .auth-button {
-    width: 100%;
-  }
 }
