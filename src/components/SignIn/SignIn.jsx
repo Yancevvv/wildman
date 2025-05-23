@@ -11,21 +11,12 @@ const SignIn = () => {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
     setError('');
 
     try {
-      console.log('Sending request to /api/user/create');
       const response = await fetch('http://localhost:8080/api/user/create', {
         method: 'POST',
         headers: {
@@ -37,18 +28,26 @@ const SignIn = () => {
         })
       });
 
-      const data = await response.json();
-      console.log('Response:', data);
-
+      // Первая проверка: если статус ответа не 2xx
       if (!response.ok) {
-        throw new Error(data.message || 'Registration failed');
+        const errorData = await response.json().catch(() => null);
+        throw new Error(errorData?.message || 'Registration failed. Please try again.');
       }
 
-      console.log('Registration successful!', data);
-      navigate('/signin'); // Перенаправляем на страницу входа после регистрации
+      // Вторая проверка: пытаемся получить данные
+      const result = await response.json().catch(() => null);
+      
+      if (result) {
+        console.log('Registration successful:', result);
+        navigate('/signin'); // Перенаправляем на страницу входа
+      } else {
+        // Если ответ успешный, но без тела
+        console.log('Registration successful (no response body)');
+        navigate('/signin');
+      }
     } catch (error) {
       console.error('Registration error:', error);
-      setError(error.message || 'Registration failed');
+      setError(error.message);
     } finally {
       setIsLoading(false);
     }
@@ -68,7 +67,7 @@ const SignIn = () => {
               id="username"
               name="username"
               value={formData.username}
-              onChange={handleChange}
+              onChange={(e) => setFormData({...formData, username: e.target.value})}
               required
               disabled={isLoading}
               placeholder="Введите имя пользователя"
@@ -82,11 +81,11 @@ const SignIn = () => {
               id="password"
               name="password"
               value={formData.password}
-              onChange={handleChange}
+              onChange={(e) => setFormData({...formData, password: e.target.value})}
               required
-              minLength="4"
+              minLength="6"
               disabled={isLoading}
-              placeholder="Введите пароль (минимум 4 символов)"
+              placeholder="Введите пароль (минимум 6 символов)"
             />
           </div>
 
