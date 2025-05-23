@@ -20,6 +20,7 @@ function App() {
         <Route path="/decks" element={<DecksPage />} />
         <Route path="/create-deck" element={<CreateDeck />} />
         <Route path="/flip-cards/:deckId" element={<FlipCards />} />
+        <Route path="/Home" element={<HomePage />} /> 
         <Route path="/chat" element={<ChatPage />} />
         <Route path="/rating" element={<Rating />} />
       </Routes>

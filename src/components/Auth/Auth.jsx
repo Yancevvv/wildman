@@ -19,35 +19,34 @@ const Auth = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Попытка входа:", formData);
-    setError('');
     setIsLoading(true);
+    setError('');
 
     try {
-      const response = await fetch('/api/login', {
+      console.log('Sending request to /api/auth/login');
+      const response = await fetch('http://localhost:8080/api/auth/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          username: formData.username.trim(),
+          username: formData.username,
           password: formData.password
         }),
         credentials: 'include'
       });
 
-      console.log("Ответ сервера:", response.status);
-      
+      const data = await response.text();
+      console.log('Response:', response.status, data);
+
       if (!response.ok) {
-        const errorData = await response.json().catch(() => null);
-        throw new Error(errorData?.message || 'Неверные учетные данные');
+        throw new Error(data || 'Login failed');
       }
 
-      console.log('Аутентификация успешна');
-      window.location.href = '/dashboard';
+      window.location.href = '/Home';
     } catch (error) {
-      console.error("Ошибка авторизации:", error);
-      setError(error.message || 'Ошибка соединения с сервером');
+      console.error('Login error:', error);
+      setError(error.message);
     } finally {
       setIsLoading(false);
     }
@@ -55,16 +54,12 @@ const Auth = () => {
 
   return (
     <div className="auth-container">
-      <h1 className="auth-title">Вход в аккаунт</h1>
-      {error && (
-        <div className="error-message">
-          {error}
-        </div>
-      )}
+      <h1 className="auth-title">Login</h1>
+      {error && <div className="error-message">{error}</div>}
       
       <form onSubmit={handleSubmit} className="auth-form">
         <div className="form-group">
-          <label htmlFor="username">Имя пользователя</label>
+          <label htmlFor="username">Username</label>
           <input
             type="text"
             id="username"
@@ -72,14 +67,12 @@ const Auth = () => {
             value={formData.username}
             onChange={handleChange}
             required
-            autoComplete="username"
-            placeholder="Введите ваш username"
             disabled={isLoading}
           />
         </div>
 
         <div className="form-group">
-          <label htmlFor="password">Пароль</label>
+          <label htmlFor="password">Password</label>
           <input
             type="password"
             id="password"
@@ -88,18 +81,12 @@ const Auth = () => {
             onChange={handleChange}
             required
             minLength="6"
-            autoComplete="current-password"
-            placeholder="Не менее 6 символов"
             disabled={isLoading}
           />
         </div>
 
-        <button 
-          type="submit" 
-          className="auth-button"
-          disabled={isLoading}
-        >
-          {isLoading ? 'Вход...' : 'Войти'}
+        <button type="submit" className="auth-button" disabled={isLoading}>
+          {isLoading ? 'Logging in...' : 'Login'}
         </button>
       </form>
     </div>
