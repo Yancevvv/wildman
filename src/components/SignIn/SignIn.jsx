@@ -39,7 +39,7 @@ const SignIn = () => {
       
       if (result) {
         console.log('Registration successful:', result);
-        navigate('/Home'); // Перенаправляем на страницу входа
+        navigate('/signin'); // Перенаправляем на страницу входа
       } else {
         // Если ответ успешный, но без тела
         console.log('Registration successful (no response body)');
