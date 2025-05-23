@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
-import './Auth.css'; // Файл со стилями
+import './Auth.css';
 
 const Auth = () => {
   const [formData, setFormData] = useState({
-    nickname: '',
-    email: '',
+    username: '',
     password: ''
   });
+  const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -16,40 +17,64 @@ const Auth = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Здесь будет обработка отправки формы (API, валидация и т.д.)
-    console.log('Данные формы:', formData);
+    console.log("Попытка входа:", formData);
+    setError('');
+    setIsLoading(true);
+
+    try {
+      const response = await fetch('/api/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          username: formData.username.trim(),
+          password: formData.password
+        }),
+        credentials: 'include'
+      });
+
+      console.log("Ответ сервера:", response.status);
+      
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => null);
+        throw new Error(errorData?.message || 'Неверные учетные данные');
+      }
+
+      console.log('Аутентификация успешна');
+      window.location.href = '/dashboard';
+    } catch (error) {
+      console.error("Ошибка авторизации:", error);
+      setError(error.message || 'Ошибка соединения с сервером');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
     <div className="auth-container">
-      <h1 className="auth-title">Создать аккаунт</h1>
+      <h1 className="auth-title">Вход в аккаунт</h1>
+      {error && (
+        <div className="error-message">
+          {error}
+        </div>
+      )}
       
       <form onSubmit={handleSubmit} className="auth-form">
         <div className="form-group">
-          <label htmlFor="nickname">Имя пользователя</label>
+          <label htmlFor="username">Имя пользователя</label>
           <input
             type="text"
-            id="nickname"
-            name="nickname"
-            value={formData.nickname}
+            id="username"
+            name="username"
+            value={formData.username}
             onChange={handleChange}
             required
-            placeholder="Введите ваш никнейм"
-          />
-        </div>
-
-        <div className="form-group">
-          <label htmlFor="email">Email</label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            required
-            placeholder="Введите ваш email"
+            autoComplete="username"
+            placeholder="Введите ваш username"
+            disabled={isLoading}
           />
         </div>
 
@@ -63,12 +88,18 @@ const Auth = () => {
             onChange={handleChange}
             required
             minLength="6"
+            autoComplete="current-password"
             placeholder="Не менее 6 символов"
+            disabled={isLoading}
           />
         </div>
 
-        <button type="submit" className="auth-button">
-          Создать аккаунт
+        <button 
+          type="submit" 
+          className="auth-button"
+          disabled={isLoading}
+        >
+          {isLoading ? 'Вход...' : 'Войти'}
         </button>
       </form>
     </div>
