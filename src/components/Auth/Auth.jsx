@@ -54,7 +54,7 @@ const Auth = () => {
 
   return (
     <div className="auth-container">
-      <h1 className="auth-title">Login</h1>
+      <h1 className="auth-title">Вход</h1>
       {error && <div className="error-message">{error}</div>}
       
       <form onSubmit={handleSubmit} className="auth-form">
@@ -86,7 +86,7 @@ const Auth = () => {
         </div>
 
         <button type="submit" className="auth-button" disabled={isLoading}>
-          {isLoading ? 'Logging in...' : 'Login'}
+          {isLoading ? 'Logging in...' : 'Войти'}
         </button>
       </form>
     </div>

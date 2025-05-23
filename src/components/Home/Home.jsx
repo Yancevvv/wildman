@@ -9,8 +9,8 @@ const Home = () => {
     <div className="home-container">
       <h1>Добро пожаловать!</h1>
       <div className="buttons">
-        <button onClick={() => navigate('/signin')}>Войти</button>
-        <button onClick={() => navigate('/auth')}>Зарегистрироваться</button>
+        <button onClick={() => navigate('/signin')}>Зарегистрироваться</button>
+        <button onClick={() => navigate('/auth')}>Войти</button>
       </div>
     </div>
   );

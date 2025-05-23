@@ -59,3 +59,17 @@
 .signin-button:hover {
   background-color: #3367d6;
 }
+
+.error-message {
+  color: #e74c3c;
+  padding: 10px;
+  background-color: #fadbd8;
+  border-radius: 4px;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.signin-button:disabled {
+  background-color: #95a5a6;
+  cursor: not-allowed;
+}
