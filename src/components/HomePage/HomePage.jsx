@@ -19,7 +19,7 @@ const HomePage = () => {
   const handleLogout = async () => {
     try {
       // Отправляем запрос на выход
-      await fetch('/api/auth/logout', {
+      await fetch('/api/logout', {
         method: 'POST',
         credentials: 'include'
       });
