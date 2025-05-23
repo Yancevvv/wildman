@@ -10,6 +10,7 @@ import FlipCards from './components/FlipCards/FlipCards';
 import ChatPage from './components/ChatPage/ChatPage';
 import Rating from './components/Rating/Rating';
 import HomePage from './components/HomePage/HomePage';
+import EditDeck from './components/EditDeck/EditDeck';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path="/flip-cards/:deckId" element={<FlipCards />} />
         <Route path="/Home" element={<HomePage />} /> 
         <Route path="/chat" element={<ChatPage />} />
+        <Route path="/EditDeck" element={<EditDeck />} />
         <Route path="/rating" element={<Rating />} />
       </Routes>
     </Router>

@@ -1,38 +1,55 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import './CreateDeck.css';
 
 const CreateDeck = () => {
-  const [deckName, setDeckName] = useState('IELTS Test1');
-  const [cards, setCards] = useState([
-    { id: 1, front: 'to invent', back: 'изобретать' },
-    { id: 2, front: 'an interlocutor', back: 'собеседник' }
-  ]);
-  const [newCard, setNewCard] = useState({ front: '', back: '' });
+  const navigate = useNavigate();
+  const [deckName, setDeckName] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
 
-  const handleAddCard = () => {
-    if (newCard.front && newCard.back) {
-      setCards([...cards, { 
-        id: Date.now(), 
-        front: newCard.front, 
-        back: newCard.back 
-      }]);
-      setNewCard({ front: '', back: '' });
+  const handleCreateDeck = async () => {
+    if (!deckName.trim()) {
+      setError('Please enter deck name');
+      return;
+    }
+
+    setIsLoading(true);
+    setError('');
+
+    try {
+      const token = localStorage.getItem('token');
+      const response = await axios.post('/api/decks', 
+        { name: deckName }, // Отправляем только имя колоды
+        {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          }
+        }
+      );
+
+      console.log('Deck created successfully:', response.data);
+      navigate('/decks'); // Перенаправляем на страницу колод
+    } catch (err) {
+      console.error('Error creating deck:', err);
+      setError('Failed to create deck. Please try again.');
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  const handleCreateDeck = () => {
-    const deckData = {
-      name: deckName,
-      cards: cards
-    };
-    console.log('Creating deck:', deckData);
-    // Здесь будет логика создания колоды
+  const handleCancel = () => {
+    navigate('/decks');
   };
 
   return (
     <div className="create-deck-container">
       <h1 className="create-deck-title">Create new deck</h1>
       
+      {error && <div className="error-message">{error}</div>}
+
       <div className="deck-name-section">
         <label htmlFor="deck-name">Deck name:</label>
         <input
@@ -41,52 +58,24 @@ const CreateDeck = () => {
           value={deckName}
           onChange={(e) => setDeckName(e.target.value)}
           className="deck-name-input"
+          placeholder="Enter deck name"
         />
       </div>
 
-      <div className="cards-list">
-        <h3>Cards in deck:</h3>
-        {cards.map(card => (
-          <div key={card.id} className="card-item">
-            <div className="card-side">{card.front}</div>
-            <div className="card-side">{card.back}</div>
-          </div>
-        ))}
-      </div>
-
-      <div className="add-card-section">
-        <h3>Add new card:</h3>
-        <div className="card-inputs">
-          <input
-            type="text"
-            placeholder="English"
-            value={newCard.front}
-            onChange={(e) => setNewCard({...newCard, front: e.target.value})}
-          />
-          <input
-            type="text"
-            placeholder="Russian"
-            value={newCard.back}
-            onChange={(e) => setNewCard({...newCard, back: e.target.value})}
-          />
-          <button 
-            onClick={handleAddCard}
-            className="add-card-button"
-            disabled={!newCard.front || !newCard.back}
-          >
-            +
-          </button>
-        </div>
-      </div>
-
       <div className="action-buttons">
-        <button className="cancel-button">Cancel</button>
+        <button 
+          className="cancel-button"
+          onClick={handleCancel}
+          disabled={isLoading}
+        >
+          Cancel
+        </button>
         <button 
           className="create-button"
           onClick={handleCreateDeck}
-          disabled={cards.length === 0}
+          disabled={!deckName.trim() || isLoading}
         >
-          Create Deck
+          {isLoading ? 'Creating...' : 'Create Deck'}
         </button>
       </div>
     </div>

@@ -1,43 +1,56 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import './DecksPage.css';
 
 const DecksPage = () => {
   const navigate = useNavigate();
-  const [decks, setDecks] = useState([
-    { id: 1, name: 'Deck 1', cards: [] },
-    { id: 2, name: 'IELTS Test 1', cards: [
-      { front: 'to invent', back: 'изобретать' },
-      { front: 'an interlocutor', back: 'собеседник' }
-    ]},
-    { id: 3, name: 'TOEFL Test 1', cards: [] },
-    { id: 4, name: 'Deck 2', cards: [] },
-    { id: 5, name: 'IELTS Test 2', cards: [] },
-    { id: 6, name: 'TOEFL Test 2', cards: [] }
-  ]);
-
+  const [decks, setDecks] = useState([]);
   const [selectedDeck, setSelectedDeck] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const [editName, setEditName] = useState('');
 
-  const handleDelete = () => {
+  useEffect(() => {
+    const fetchDecks = async () => {
+      try {
+        const response = await axios.get('/api/decks', {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`
+          }
+        });
+        setDecks(response.data.map(deck => ({
+          id: deck.id,
+          name: deck.name,
+          cards: [] // Assuming cards are empty or could be fetched separately
+        })));
+      } catch (error) {
+        console.error('Error fetching decks:', error);
+      }
+    };
+
+    fetchDecks();
+  }, []);
+
+  const handleDelete = async () => {
     if (selectedDeck) {
-      setDecks(decks.filter(deck => deck.id !== selectedDeck));
-      setSelectedDeck(null);
+      try {
+        await axios.delete(`/api/decks/${selectedDeck}`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`
+          }
+        });
+        setDecks(decks.filter(deck => deck.id !== selectedDeck));
+        setSelectedDeck(null);
+      } catch (error) {
+        console.error('Error deleting deck:', error);
+      }
     }
   };
 
   const handleCreate = () => {
     navigate('/create-deck');
   };
-
-  const handleChat = () => {
-    if (selectedDeck) {
-      console.log(`Opening chat for deck ${selectedDeck}`);
-      // Здесь будет логика открытия чата
-      navigate('/chat');
-    }
-  };
+  
 
   const handleEdit = () => {
     if (selectedDeck) {
@@ -47,11 +60,21 @@ const DecksPage = () => {
     }
   };
 
-  const handleSaveEdit = () => {
-    setDecks(decks.map(deck => 
-      deck.id === selectedDeck ? { ...deck, name: editName } : deck
-    ));
-    setIsEditing(false);
+  const handleSaveEdit = async () => {
+    try {
+      await axios.put(`/api/decks/${selectedDeck}`, editName, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+          'Content-Type': 'application/json'
+        }
+      });
+      setDecks(decks.map(deck => 
+        deck.id === selectedDeck ? { ...deck, name: editName } : deck
+      ));
+      setIsEditing(false);
+    } catch (error) {
+      console.error('Error updating deck name:', error);
+    }
   };
 
   const handleCancelEdit = () => {
@@ -59,10 +82,10 @@ const DecksPage = () => {
   };
   
   const handleLearnCard = () => {
-  if (selectedDeck) {
-    navigate(`/flip-cards/${selectedDeck}`);
-  }
-};
+    if (selectedDeck) {
+      navigate(`/flip-cards/${selectedDeck}`);
+    }
+  };
 
   return (
     <div className="decks-page">
@@ -128,13 +151,6 @@ const DecksPage = () => {
               className="action-btn create-btn"
             >
               Create
-            </button>
-            <button 
-              onClick={handleChat} 
-              className="action-btn chat-btn"
-              disabled={!selectedDeck}
-            >
-              Chat
             </button>
             <button 
               onClick={handleLearnCard} 
