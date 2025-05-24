@@ -4,20 +4,20 @@
 
 wildmanFront/
 └── wildman/
-    ├── src/
-    │   ├── components/
-    │   │   ├── DecksPage.jsx
-    │   │   ├── CreateDeck.jsx
-    │   │   ├── ChatPage.jsx
-    │   │   ├── SignIn.jsx
-    │   │   ├── Auth.jsx
-    │   │   ├── HomePage.jsx
-    │   │   ├── EditDeck.jsx
-    │   │   └── FlipCards.jsx
-    │   ├── App.js
-    │   └── index.js
-    ├── package.json
-    └── README.md
+├── src/
+│ ├── components/
+│ │ ├── DecksPage.jsx
+│ │ ├── CreateDeck.jsx
+│ │ ├── ChatPage.jsx
+│ │ ├── SignIn.jsx
+│ │ ├── Auth.jsx
+│ │ ├── HomePage.jsx
+│ │ ├── EditDeck.jsx
+│ │ └── FlipCards.jsx
+│ ├── App.js
+│ └── index.js
+├── package.json
+└── README.md
 
 ## Установка зависимостей
 
