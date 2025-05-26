@@ -47,6 +47,11 @@ const DecksPage = () => {
     }
   };
 
+
+  const goToHome = () => {
+    navigate('/Home');
+  }
+
   const handleCreate = () => {
     navigate('/create-deck');
   };
@@ -89,6 +94,14 @@ const DecksPage = () => {
 
   return (
     <div className="decks-page">
+
+      <button 
+        className="home-button"
+        onClick={goToHome}
+        title="Go to Home"
+      >
+        Home
+      </button>
       <h1 className="decks-title">Your Decks</h1>
       
       <div className="decks-grid">

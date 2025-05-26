@@ -44,8 +44,13 @@ const CreateDeck = () => {
     navigate('/decks');
   };
 
+  const goToHome = () => {
+    navigate('/Home');
+  }
+
   return (
     <div className="create-deck-container">
+    
       <h1 className="create-deck-title">Create new deck</h1>
       
       {error && <div className="error-message">{error}</div>}
@@ -77,6 +82,14 @@ const CreateDeck = () => {
         >
           {isLoading ? 'Creating...' : 'Create Deck'}
         </button>
+
+        <button 
+        className="home-button"
+        onClick={goToHome}
+        title="Go to Home"
+      >
+        Home
+      </button>
       </div>
     </div>
   );

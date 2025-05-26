@@ -11,6 +11,8 @@ const ChatPage = () => {
   const [error, setError] = useState('');
   const [mistakes, setMistakes] = useState('');
 
+  const navigate = useNavigate();
+
   // Создание нового чата
   const createChat = async () => {
     setIsLoading(true);
@@ -105,9 +107,20 @@ const ChatPage = () => {
     }
   };
 
+   const goToHome = () => {
+    navigate('/Home');
+  }
+
   return (
     <div className="chat-container">
       <div className="conversation-area">
+        <button 
+        className="home-button"
+        onClick={goToHome}
+        title="Go to Home"
+      >
+        Home
+      </button>
         <h2 className="conversation-title">Чат с ассистентом</h2>
 
         {error && <div className="error-message">{error}</div>}
